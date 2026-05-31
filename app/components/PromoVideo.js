@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const STOP_AT_SECONDS = 79;
 
@@ -21,7 +21,7 @@ export default function PromoVideo() {
       className="h-[360px] w-full object-cover sm:h-[440px] md:h-[520px] lg:h-[580px]"
       src="/images/RueVideo.mp4"
       controls
-      preload="none"
+      preload="metadata"
       playsInline
       onTimeUpdate={clampPlayback}
       onSeeked={clampPlayback}

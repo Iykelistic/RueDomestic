@@ -89,30 +89,36 @@ export default function HeroCarousel() {
       aria-label="Featured services"
     >
       <div className="absolute inset-0 overflow-hidden rounded-b-3xl md:rounded-b-4xl">
-        {activeSlides.map((s, i) => (
-          <div
-            key={s.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-out ${
-              i === index ? "z-0 opacity-100" : "z-0 opacity-0 pointer-events-none"
-            }`}
-            aria-hidden={i !== index}
-          >
-            <Image
-              src={s.image}
-              alt={s.imageAlt}
-              fill
-              className="object-cover object-top"
-              sizes="100vw"
-              priority={i === 0}
-            />
+        {SLIDES.map((s) => {
+          const slideIndex = activeSlides.findIndex((slide) => slide.id === s.id);
+          const isInRotation = slideIndex !== -1;
+          const isActive = isInRotation && slideIndex === index;
+
+          return (
             <div
-              className={`absolute inset-0 ${
-                s.hideCopy ? "bg-black/10" : "bg-linear-to-b from-black/55 via-black/45 to-black/65"
-              }`}
-              aria-hidden
-            />
-          </div>
-        ))}
+              key={s.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-out ${
+                !isInRotation ? "pointer-events-none opacity-0" : ""
+              } ${isActive ? "z-0 opacity-100" : "z-0 opacity-0 pointer-events-none"}`}
+              aria-hidden={!isActive}
+            >
+              <Image
+                src={s.image}
+                alt={s.imageAlt}
+                fill
+                className="object-cover object-top"
+                sizes="100vw"
+                priority={s.id === "cleaning"}
+              />
+              <div
+                className={`absolute inset-0 ${
+                  s.hideCopy ? "bg-black/10" : "bg-linear-to-b from-black/55 via-black/45 to-black/65"
+                }`}
+                aria-hidden
+              />
+            </div>
+          );
+        })}
       </div>
 
       <div className="relative z-10 flex min-h-[min(92svh,820px)] flex-col items-center justify-center px-4 pb-28 pt-24 text-center sm:px-8 md:min-h-[min(100svh,920px)] md:pb-32">
@@ -163,19 +169,32 @@ export default function HeroCarousel() {
         role="tablist"
         aria-label="Slides"
       >
-        {activeSlides.map((s, i) => (
-          <button
-            key={s.id}
-            type="button"
-            role="tab"
-            aria-selected={i === index}
-            aria-label={`Slide ${i + 1}: ${s.title}`}
-            className={`h-2 rounded-full transition-all ${
-              i === index ? "w-8 bg-[#0CAFEB]" : "w-2 bg-white/50 hover:bg-white/70"
-            }`}
-            onClick={() => setIndex(i)}
-          />
-        ))}
+        {SLIDES.map((s) => {
+          const slideIndex = activeSlides.findIndex((slide) => slide.id === s.id);
+          const isInRotation = slideIndex !== -1;
+
+          return (
+            <button
+              key={s.id}
+              type="button"
+              role="tab"
+              aria-selected={isInRotation && slideIndex === index}
+              aria-hidden={!isInRotation}
+              tabIndex={isInRotation ? 0 : -1}
+              aria-label={`Slide ${slideIndex + 1}: ${s.title}`}
+              className={`h-2 rounded-full transition-all ${
+                !isInRotation ? "pointer-events-none w-0 opacity-0" : ""
+              } ${
+                isInRotation && slideIndex === index
+                  ? "w-8 bg-[#0CAFEB]"
+                  : isInRotation
+                    ? "w-2 bg-white/50 hover:bg-white/70"
+                    : ""
+              }`}
+              onClick={() => isInRotation && setIndex(slideIndex)}
+            />
+          );
+        })}
       </div>
     </section>
   );

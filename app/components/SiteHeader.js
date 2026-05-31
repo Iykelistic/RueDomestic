@@ -119,7 +119,7 @@ export default function SiteHeader() {
           className={`${menuOpen ? "flex" : "hidden"} absolute left-0 right-0 top-full z-40 flex-col gap-1 border-b border-zinc-200 bg-white px-4 py-4 shadow-lg md:static md:z-auto md:flex md:flex-row md:items-center md:gap-8 md:border-0 md:bg-transparent md:px-0 md:py-0 md:shadow-none`}
           aria-label="Main"
         >
-          <Link
+          <a
             href="/"
             className={`w-fit self-start md:inline-flex md:self-auto ${navLinkClass("home")}`}
             aria-current={activeNav === "home" ? "page" : undefined}
@@ -134,8 +134,8 @@ export default function SiteHeader() {
                 />
               )}
             </span>
-          </Link>
-          <Link
+          </a>
+          <a
             href="#why-choose"
             className={`w-fit self-start md:inline-flex md:self-auto ${navLinkClass("about")}`}
             aria-current={activeNav === "about" ? "page" : undefined}
@@ -150,8 +150,8 @@ export default function SiteHeader() {
                 />
               )}
             </span>
-          </Link>
-          <Link
+          </a>
+          <a
             href="#what-we-do"
             className={`w-fit self-start md:inline-flex md:self-auto ${navLinkClass("services")}`}
             aria-current={activeNav === "services" ? "page" : undefined}
@@ -166,8 +166,8 @@ export default function SiteHeader() {
                 />
               )}
             </span>
-          </Link>
-          <Link
+          </a>
+          <a
             href="#contact"
             className={`w-fit self-start md:inline-flex md:self-auto ${navLinkClass("contact")}`}
             aria-current={activeNav === "contact" ? "page" : undefined}
@@ -182,7 +182,7 @@ export default function SiteHeader() {
                 />
               )}
             </span>
-          </Link>
+          </a>
         </nav>
 
         <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
